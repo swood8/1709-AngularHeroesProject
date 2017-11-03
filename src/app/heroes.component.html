@@ -1,0 +1,32 @@
+<!--
+  Hero details was a part of the AppComponent but we turned it into its own component
+    and now reference it through the <hero-detail> directive
+
+      Hero is a property in hero-detail.component.ts
+      selectedHero is a property in app.component.ts
+
+      We want them both to match
+-->
+<h2>My Heroes</h2>
+<div>
+  <label>Hero name:</label> <input #heroName />
+  <button (click)="add(heroName.value); heroName.value=''">
+    Add
+  </button>
+</div>
+<ul class="heroes">
+  <!-- *ngFor is a specific type of directive called a structural derective, also *ngIf -->
+  <li *ngFor="let hero of heroes" 
+  [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
+    <span class="badge">{{hero.id}}</span>
+    <span>{{hero.name}}</span>
+    <button class="delete" (click)="delete(hero); $event.stopPropagation()">x</button>
+  </li>
+</ul>
+
+<div *ngIf="selectedHero">
+  <h2>
+    {{selectedHero.name | uppercase}} is my hero
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
